@@ -9,7 +9,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- Replace with your actual bot token ---
-TELEGRAM_BOT_TOKEN = os.getenv(BOT_TOKEN)
+TELEGRAM_BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Sends a welcome message when the /start command is issued."""
