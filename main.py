@@ -4,8 +4,8 @@ import time
 from tqdm import tqdm
 
 # Replace with your actual bot token and channel ID
-BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-CHANNEL_ID = os.getenv('TELEGRAM_ID')  # Or use the numerical ID like -1001234567890
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+CHANNEL_ID = os.getenv('CHANNEL_ID')  # Or use the numerical ID like -1001234567890
 number_download = 5
 namefile = "lenawewe"
   # Change this to your desired file name prefix
