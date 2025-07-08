@@ -18,6 +18,8 @@ BOT_TOKEN = os.getenv('BOT_TOKEN')
 CHANNEL_ID = os.getenv('CHANNEL_ID')  # Or use the numerical ID like -1001234567890
 number_download = 5
 namefile = "lenawewe"
+TELEGRAMAPI_ID = os.getenv('APITELEGRAM_ID')
+TELEGRAMAPI_HASH = os.getenv('APITELEGRAM_HASH')
   # Change this to your desired file name prefix
 # def send_video_as_document_sync(video_path: str, caption: str = None):
 #     """
@@ -45,6 +47,7 @@ with TelegramClient('name1', TELEGRAMAPI_ID, TELEGRAMAPI_HASH) as client:
 
     # tittle = "chiyrokiy shewek چیرۆکی شەوێک"
     idpostchennal = 2384585674
+    idpostchennal = 1255523166
     channelmy = client(GetFullChannelRequest(idpostchennal))
     # print(channelmy.full_chat)
 
