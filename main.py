@@ -1,42 +1,99 @@
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
+import requests
 import os
-import asyncio
-from telegram import Bot
-from telegram.constants import ParseMode # Import ParseMode for potential captions
+import time
+from tqdm import tqdm
+
+# Replace with your actual bot token and channel ID
+BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+CHANNEL_ID = os.getenv('TELEGRAM_ID')  # Or use the numerical ID like -1001234567890
+number_download = 5
+namefile = "lenawewe"
+  # Change this to your desired file name prefix
+# def send_video_as_document_sync(video_path: str, caption: str = None):
+#     """
+#     Sends a video file to a Telegram channel as a document using requests (synchronous).
+
+#     Args:
+#         video_path (str): The path to your video file.
+#         caption (str, optional): An optional caption for the video. Defaults to None.
+#     """
 
 
-LOCAL_VIDEO_PATH = "video.mp4"
-TELEGRAMAPI_ID = os.getenv("APITELEGRAM_ID")   
-TELEGRAMAPI_HASH = os.getenv("APITELEGRAM_HASH")
-TELEGRAM_TOKEN = os.getenv("BOT_TOKEN")
-BOT_USERNAME = "@drama23bot"  # Replace with your bot's username
+with TelegramClient('name1', TELEGRAMAPI_ID, TELEGRAMAPI_HASH) as client:
+# Connect to Telegram (if not already connected)
+# client.connect() test75.py allcodes for sending* HAZIR <=
 
-async def send_video_as_document(video_path: str, caption: str = None):
-    """
-    Sends a video file to a Telegram channel as a document to preserve quality.
+    result = client(
+        GetDialogsRequest(
+            offset_date=None,
+            offset_id=0,
+            offset_peer="username", # Corrected: InputPeerEmpty needs to be instantiated
+            limit=500,                    # Corrected: 'linit' should be 'limit'
+            hash=0
+        )
+    )
 
-    Args:
-        video_path (str): The path to your video file.
-        caption (str, optional): An optional caption for the video. Defaults to None.
-    """
-    bot = Bot(token=TELEGRAM_TOKEN)
-    try:
-        async with bot:
+    # tittle = "chiyrokiy shewek چیرۆکی شەوێک"
+    idpostchennal = 2384585674
+    channelmy = client(GetFullChannelRequest(idpostchennal))
+    # print(channelmy.full_chat)
+
+    messages = client.get_messages(channelmy.full_chat, limit=2000)
+
+    i = 1
+
+    for message in tqdm(messages):
+        if i == number_download:
+            break
+        video_file_to_send = message.download_media('./' + f'/{namefile} {i}')
+
+        time.sleep(3)  # Optional: Sleep to avoid hitting API rate limits
+        video_caption = "Here's the video without quality loss!"
+        video_path = video_file_to_send  # Use the downloaded file path
+
+        if not os.path.exists(video_path):
+            print(f"Error: Video file not found at '{video_path}'")
+            return
+
+        telegram_api_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendDocument"
+
+        # Prepare the payload for the request
+        data = {
+            'chat_id': CHANNEL_ID,
+            'caption': caption if caption else '', # Ensure caption is not None for the API call
+            'parse_mode': 'HTML' # Or 'MarkdownV2'
+        }
+
+        try:
             with open(video_path, 'rb') as video_file:
-                await bot.send_document(
-                    chat_id=CHANNEL_ID,
-                    document=video_file,
-                    caption=caption,
-                    parse_mode=ParseMode.HTML # Or ParseMode.MARKDOWN_V2 if you prefer
-                )
-        print(f"Video '{video_path}' sent successfully as a document to {CHANNEL_ID}")
-    except Exception as e:
-        print(f"Error sending video: {e}")
+                files = {'document': video_file}
+                response = requests.post(telegram_api_url, data=data, files=files)
+                response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+
+            json_response = response.json()
+            if json_response.get('ok'):
+                print(f"Video '{video_path}' sent successfully as a document to {CHANNEL_ID}")
+            else:
+                print(f"Failed to send video. Telegram API response: {json_response.get('description', 'Unknown error')}")
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error sending video (network or API error): {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+
+        i += 1
+
+ # <--- IMPORTANT: Change this to your video file path
 
 
-# download_media(10, "dramay chall")
 
-video_file_to_send = "video.mp4"  # Path to your video file
-video_caption = "Here is the video in full quality."
-asyncio.run(send_video_as_document(video_file_to_send, video_caption))
+
+
+
+
+# if __name__ == '__main__':
+#     video_file_to_send = 'path/to/your/video.mp4'  # <--- IMPORTANT: Change this to your video file path
+#     video_caption = "Here's the video without quality loss!"
+
+#     # Call the synchronous function
+#     send_video_as_document_sync(video_file_to_send, video_caption)
