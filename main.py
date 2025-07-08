@@ -53,7 +53,7 @@ with TelegramClient('name1', TELEGRAMAPI_ID, TELEGRAMAPI_HASH) as client:
 
         if not os.path.exists(video_path):
             print(f"Error: Video file not found at '{video_path}'")
-            return
+            break
 
         telegram_api_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendDocument"
 
