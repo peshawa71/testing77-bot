@@ -2,6 +2,16 @@ import requests
 import os
 import time
 from tqdm import tqdm
+from telethon.sync import TelegramClient, events
+from telethon.tl.functions.messages import GetDialogsRequest
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.types import InputPeerEmpty
+from tqdm import tqdm
+import os
+import asyncio
+from telegram import Bot
+from telegram.constants import ParseMode # Import ParseMode for potential captions
+
 
 # Replace with your actual bot token and channel ID
 BOT_TOKEN = os.getenv('BOT_TOKEN')
