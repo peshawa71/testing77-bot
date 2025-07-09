@@ -11,7 +11,7 @@ load_dotenv()
 # api_hash = os.getenv("API_HASH")
 api_id = int(os.getenv("APITELEGRAM_ID")) # Replace with your actual API ID
 api_hash = os.getenv("APITELEGRAM_HASH")  # Replace with your actual API Hash
-channel_to_send = os.getenv("CHANNEL_ID") # e.g. @mychannel
+channel_to_send = "@chyroki_shewek" # e.g. @mychannel
 
 DOWNLOADS_DIR = "downloads100"
 os.makedirs(DOWNLOADS_DIR, exist_ok=True)
