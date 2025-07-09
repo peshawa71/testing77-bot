@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # --- Configuration ---
 # Replace with your actual bot token from BotFather
-BOT_TOKEN = os.getenv('BOT_TOKEN')os.getenv('BOT_TOKEN')
+BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 # Replace with the Chat ID of the user you want to send the video to.
 # This is usually your own user ID for private messages.
