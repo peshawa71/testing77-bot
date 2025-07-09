@@ -43,6 +43,6 @@ def download_and_forward(chat, limit):
                 print(f"❌ Error: {e}")
 
 if __name__ == "__main__":
-    source = os.getenv("CHENALL_SOURCE")
+    source = "@reng_tv"
     limit = 50
     download_and_forward(source, limit)
