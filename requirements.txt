@@ -1,5 +1,2 @@
-python-telegram-bot==21.2 # Or the latest stable version you prefer
-requests
-tqdm
 telethon
-python-telegram-bot
+python-dotenv
