@@ -58,9 +58,10 @@ with TelegramClient('name1', TELEGRAMAPI_ID, TELEGRAMAPI_HASH) as client:
     for message in tqdm(messages):
         if i == number_download:
             break
-        video_file_to_send = message.download_media('./' + f'/{namefile} {i}')
+        message.download_media('./' + f'/{namefile} {i}')
 
         time.sleep(3)  # Optional: Sleep to avoid hitting API rate limits
+        video_file_to_send = './' + f'{namefile} {i}'
         video_caption = "Here's the video without quality loss!"
         video_path = video_file_to_send  # Use the downloaded file path
 
