@@ -23,8 +23,8 @@ def show_progress(current, total):
     percent = int(current * 100 / total) if total else 0
     print(f"\r📥 Downloading... {percent}%", end="")
 
-async def download_and_forward(chat, limit):
-    messages = client.get_messages(chat, limit=limit)
+def download_and_forward(chat, limit):
+    messages = await client.get_messages(chat, limit=limit)
     for msg in messages:
         if msg.media:
             try:
@@ -37,7 +37,7 @@ async def download_and_forward(chat, limit):
                     print(f"🚀 Sent to {channel_to_send}")
 
                     # Delete file
-                    await os.remove(filename)
+                    os.remove(filename)
                     print(f"🗑️ Deleted {filename}")
             except Exception as e:
                 print(f"❌ Error: {e}")
