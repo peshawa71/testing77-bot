@@ -45,4 +45,4 @@ async def download_and_forward(chat, limit):
 if __name__ == "__main__":
     source = "@reng_tv"
     limit = 50
-    await download_and_forward(source, limit)
+    asyncio.run(download_and_forward(source, limit))
