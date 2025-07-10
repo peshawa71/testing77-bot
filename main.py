@@ -23,7 +23,7 @@ def show_progress(current, total):
     percent = int(current * 100 / total) if total else 0
     print(f"\r📥 Downloading... {percent}%", end="")
 
-def download_and_forward(chat, limit):
+async def download_and_forward(chat, limit):
     messages = await client.get_messages(chat, limit=limit)
     for msg in messages:
         if msg.media:
