@@ -19,16 +19,16 @@ os.makedirs(DOWNLOADS_DIR, exist_ok=True)
 client = TelegramClient("name1", api_id, api_hash)
 client.start()
 
-def show_progress(current, total):
+async def show_progress(current, total):
     percent = int(current * 100 / total) if total else 0
     print(f"\r📥 Downloading... {percent}%", end="")
 
 async def download_and_forward(chat, limit):
-    messages = await client.get_messages(chat, limit=limit)
+    messages = client.get_messages(chat, limit=limit)
     for msg in messages:
         if msg.media:
             try:
-                filename = await client.download_media(msg, DOWNLOADS_DIR, progress_callback=show_progress)
+                filename = client.download_media(msg, DOWNLOADS_DIR, progress_callback=show_progress)
                 if filename:
                     print(f"\n✅ Downloaded: {filename}")
 
