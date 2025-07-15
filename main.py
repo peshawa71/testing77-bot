@@ -52,7 +52,7 @@ def download_and_forward(chat, limit):
                     print(f"\n✅ Downloaded: {filename}")
 
                     # Send to another channel
-                    client.send_file(channel_to_send, filename, caption=f"{DOWNLOAD_VIDEO.text}")
+                    client.send_file(channel_to_send, filename, caption=f"{msg.text}")
                     print(f"🚀 Sent to {channel_to_send}\n")
 
                     # Delete file
@@ -64,5 +64,5 @@ def download_and_forward(chat, limit):
 
 if __name__ == "__main__":
     source = "@reng_tv"
-    limit = 200
+    limit = 100
     download_and_forward(source, limit)
