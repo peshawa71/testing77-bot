@@ -63,6 +63,6 @@ def download_and_forward(chat, limit):
                 print(f"❌ file Error : {e}")
 
 if __name__ == "__main__":
-    source = "@reng_tv"
+    source = "@hadiagull"
     limit = 100
     download_and_forward(source, limit)
