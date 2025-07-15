@@ -33,7 +33,8 @@ def download_and_forward(chat, limit):
     for msg in tqdm.tqdm(reverse_data):
 
 
-        if msg.media and "چیرۆکی شەوێک" in msg.text:
+        # if msg.media and "چیرۆکی شەوێک" in msg.text:
+        if msg.media:
 
 
             # for message2 in tqdm.tqdm(messages) if message2.media and "چیرۆکی شەوێک" in message2.text and message2.id == max_id:
