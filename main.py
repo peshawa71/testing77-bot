@@ -13,10 +13,6 @@ api_id = int(os.getenv("APITELEGRAM_ID"))
 api_hash = os.getenv("APITELEGRAM_HASH")
 channel_to_send = "@chyroki_shewek"
 
-api_id = 26361414  # del
-api_hash = "3c2e0087748a3fc216f6eb807232c05d"   # del
-channel_to_send = -1002384585674 # del
-
 DOWNLOADS_DIR = "downloads100"
 os.makedirs(DOWNLOADS_DIR, exist_ok=True)
 
