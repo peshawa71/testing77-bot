@@ -33,8 +33,8 @@ def download_and_forward(chat, limit):
     for msg in tqdm.tqdm(reverse_data):
 
 
-        # if msg.media and "چیرۆکی شەوێک" in msg.text:
-        if msg.media:
+        if msg.media and "چیرۆکی شەوێک" in msg.text:
+        # if msg.media:
 
 
             # for message2 in tqdm.tqdm(messages) if message2.media and "چیرۆکی شەوێک" in message2.text and message2.id == max_id:
@@ -64,6 +64,6 @@ def download_and_forward(chat, limit):
                 print(f"❌ file Error : {e}")
 
 if __name__ == "__main__":
-    source = "@hadiagull"
+    source = "@reng_tv"
     limit = 100
     download_and_forward(source, limit)
