@@ -19,20 +19,18 @@ os.makedirs(DOWNLOADS_DIR, exist_ok=True)
 client = TelegramClient("name1", api_id, api_hash)
 client.start()
 
-# def show_progress(current, total):
-#     percent = int(current * 100 / total) if total else 0
-#     print(f"\r📥 Downloading... > {percent}%", end="")
-
 def download_and_forward(chat, limit):
     # isdownload = True
     messages = client.get_messages(chat, limit=limit)
+
+    reverse_data = messages[::-1]
 
     # all_listed_id = [message.id for message in messages if "چیرۆکی شەوێک" in message.text and message.media]
 
     # max_id = max(all_listed_id) if all_listed_id else print("No messages found with the specified text and media.")
 
 
-    for msg in tqdm.tqdm(messages):
+    for msg in tqdm.tqdm(reverse_data):
 
 
         if msg.media and "چیرۆکی شەوێک" in msg.text:
