@@ -65,5 +65,5 @@ def download_and_forward(chat, limit):
 
 if __name__ == "__main__":
     source = "@reng_tv"
-    limit = 100
+    limit = 200 # its 100 if we have a tekall hh.
     download_and_forward(source, limit)
