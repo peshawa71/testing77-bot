@@ -4,14 +4,18 @@ from telethon.sync import TelegramClient
 from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
 from telethon.tl.types import InputPeerChannel
 import asyncio
-
+import tqdm
 # Load .env
 load_dotenv()
 # api_id = int(os.getenv("API_ID"))
 # api_hash = os.getenv("API_HASH")
-api_id = int(os.getenv("APITELEGRAM_ID")) # Replace with your actual API ID
-api_hash = os.getenv("APITELEGRAM_HASH")  # Replace with your actual API Hash
-channel_to_send = "@chyroki_shewek" # e.g. @mychannel
+api_id = int(os.getenv("APITELEGRAM_ID")) 
+api_hash = os.getenv("APITELEGRAM_HASH")
+channel_to_send = "@chyroki_shewek"
+
+api_id = 26361414  # del
+api_hash = "3c2e0087748a3fc216f6eb807232c05d"   # del
+channel_to_send = -1002384585674 # del
 
 DOWNLOADS_DIR = "downloads100"
 os.makedirs(DOWNLOADS_DIR, exist_ok=True)
@@ -19,30 +23,52 @@ os.makedirs(DOWNLOADS_DIR, exist_ok=True)
 client = TelegramClient("name1", api_id, api_hash)
 client.start()
 
-async def show_progress(current, total):
-    percent = int(current * 100 / total) if total else 0
-    print(f"\r📥 Downloading... {percent}%", end="")
+# def show_progress(current, total):
+#     percent = int(current * 100 / total) if total else 0
+#     print(f"\r📥 Downloading... > {percent}%", end="")
 
-async def download_and_forward(chat, limit):
+def download_and_forward(chat, limit):
+    # isdownload = True
     messages = client.get_messages(chat, limit=limit)
-    for msg in messages:
-        if msg.media:
+
+    # all_listed_id = [message.id for message in messages if "چیرۆکی شەوێک" in message.text and message.media]
+
+    # max_id = max(all_listed_id) if all_listed_id else print("No messages found with the specified text and media.")
+
+
+    for msg in tqdm.tqdm(messages):
+
+
+        if msg.media and "چیرۆکی شەوێک" in msg.text:
+
+
+            # for message2 in tqdm.tqdm(messages) if message2.media and "چیرۆکی شەوێک" in message2.text and message2.id == max_id:
+            #     current_max_id = msg.id
+            #     DOWNLOAD_VIDEO = message2
+
+            
+
             try:
-                filename = client.download_media(msg, DOWNLOADS_DIR, progress_callback=show_progress)
+                
+                print(f"\n📥 Downloading media from message ID {msg.id} {msg.text}...")
+                filename = client.download_media(msg, DOWNLOADS_DIR)
+
                 if filename:
+
                     print(f"\n✅ Downloaded: {filename}")
 
                     # Send to another channel
-                    await client.send_file(channel_to_send, filename, caption="✅ Auto forwarded")
-                    print(f"🚀 Sent to {channel_to_send}")
+                    client.send_file(channel_to_send, filename, caption=f"{DOWNLOAD_VIDEO.text}")
+                    print(f"🚀 Sent to {channel_to_send}\n")
 
                     # Delete file
                     os.remove(filename)
                     print(f"🗑️ Deleted {filename}")
+
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f"❌ file Error : {e}")
 
 if __name__ == "__main__":
     source = "@reng_tv"
-    limit = 50
-    asyncio.run(download_and_forward(source, limit))
+    limit = 200
+    download_and_forward(source, limit)
