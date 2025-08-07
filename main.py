@@ -6,14 +6,6 @@ from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
 from telethon.tl.types import InputPeerChannel
 import tqdm
 import time
-from moviepy.editor import VideoFileClip, ImageClip, concatenate_videoclips, CompositeVideoClip
-import os
-from dotenv import load_dotenv
-from telethon.sync import TelegramClient
-from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
-from telethon.tl.types import InputPeerChannel
-import tqdm
-
 # Load .env
 load_dotenv()
 
