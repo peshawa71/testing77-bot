@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get clean
 
 # Set workdir and copy code
-WORKDIR /app
+WORKDIR /
 COPY . .
 
 # Install Python dependencies
