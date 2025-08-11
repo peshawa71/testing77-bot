@@ -161,14 +161,10 @@ def edit_video(video_path):
         editable_video = VideoFileClip("sponsors\videos\allsponsorlongend.mp4").subclip(0, 67)
         hadia1 = VideoFileClip("sponsors\videos\hadia.mp4")
         ghazzah1 = VideoFileClip("sponsors\videos\ghazzah1.mp4")
-        sponsorvideo_3_end = CompositeVideoClip([ghazzah1, hadia1, editable_video])
+        # sponsorvideo_3_end = CompositeVideoClip([ghazzah1, hadia1, editable_video])
         split_4 = main_withlogo.subclip(cut_place_3, cut_place_4)
-
-
-
-
-
-        final_clip = concatenate_videoclips([sponsor_beggning, split_1, sponsorvideo_1_short, split_2, sponsorvideo_2_middle, split_3, sponsorvideo_3_end, split_4, sponsorvideo_3_end]) # coneccting them together
+        
+        final_clip = concatenate_videoclips([sponsor_beggning, split_1, sponsorvideo_1_short, split_2, sponsorvideo_2_middle, split_3, hadia1, editable_video, split_4, ghazzah1, hadia1, editable_video]) # coneccting them together
         # final_clip = concatenate_videoclips([main_withlogo]) >>> for tasting only
         output_filename = get_available_filename("exported_taste/new_video")
         # final_clip = concatenate_videoclips([split_1, split_2]) >>> taste
