@@ -89,12 +89,13 @@ def download_sponsor_videos(chat, limit):
 # exporting :     # final = concatenate_videoclips(clips, method="compose")
     # final.write_videofile("with_sponsors.mp4", codec="libx264", audio_codec="aac")
 
-
 def edit_video(video_path):
 
     main_video = VideoFileClip(video_path)
+    print(f"video durtion = {main_video.duration}")
 
     if main_video.duration > 25*60:
+        print("video starts editing... loading")
 
         cut_place_1 = 6*60
         cut_place_2 = 22*60 # cut in minuite 22
@@ -106,75 +107,37 @@ def edit_video(video_path):
         # cut_place_2 = 22*60 # cut in minuite 22
         # cut_place_3 = main_video.duration - 2 # for tessting its 2 sec
         # cut_place_4 = main_video.duration
-
-
-        # def simple_motion(t):
-        # return 180, 180
-        logo_clip = ImageClip("sponsors\images\logo_gull2bigger.png").set_duration(main_video.duration)
         #video sponsor_onscreen logo_clip = resize(logo_clip, width=1980, height=1080)# set > durtion logo
-        logo_clip = logo_clip.set_position((635, 0))
         # Load the base sponsor image
-        base_sponsor = ImageClip("sponsors\images\onscreen1.png") \
-            .set_duration(17) \
-            .set_pos(("center", "bottom")) \
-            .fadein(0.5).fadeout(0.5)
-        # change this line bro >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        base_sponsor_2 = ImageClip("sponsors\images\onscreen4.png") \
-            .set_duration(17) \
-            .set_pos(("center", "bottom")) \
-            .fadein(0.5).fadeout(0.5)
 
+        sponsor_beggning = ImageClip("sponsors/images/sponsor_2sec.png").set_duration(2) # setting sponsors & timing 
 
+        split_1 = main_video.subclip(0, cut_place_1)
+        shortsponsor1 = VideoFileClip("sponsors/videos/shortsponsor_1.mp4")
 
-        # Generate sponsor times every 7 minutes
+        split_2 = main_video.subclip(cut_place_1, cut_place_2)
+        allsponsor1 = VideoFileClip("sponsors/videos/allsponsor1.mp4")
 
-        sponsor_interval = 7*60 # 7 minutes in seconds ! its both: 17s> sponsor and lets>7min but becarefull in small secounds durtion.
-        sponsor_clips = []
-        i = 0
-        for start_time in range(0, int(main_video.duration), sponsor_interval):
-                
-            if start_time + 19 < main_video.duration:
-                if i % 2 == 0:
-                    sponsor2 = base_sponsor_2.copy().set_start(start_time)
-                    sponsor_clips.append(sponsor2)
-                    i += 1
-                else:
-                    sponsor = base_sponsor.copy().set_start(start_time)
-                    sponsor_clips.append(sponsor)
-                    i += 1
+        split_3 = main_video.subclip(cut_place_2, cut_place_3)
 
+        split_4 = main_video.subclip(cut_place_3, cut_place_4)
+        allsponsor2 = VideoFileClip("sponsors/videos/allsponsor2.mp4")
 
-        main_withlogo = CompositeVideoClip([main_video, logo_clip]+ sponsor_clips) # add logo
-
-
-
-        sponsor_beggning = ImageClip("sponsors\images\sponsor_2sec.png").set_duration(2) # setting sponsors & timing 
-
-        split_1 = main_withlogo.subclip(0, cut_place_1)
-        sponsorvideo_1_short = VideoFileClip("sponsors\videos\short_sponsor_1.mp4")
-
-        split_2 = main_withlogo.subclip(cut_place_1, cut_place_2)
-        sponsorvideo_2_middle = VideoFileClip("sponsors\videos\allsponsor2.mp4")
-
-        split_3 = main_withlogo.subclip(cut_place_2, cut_place_3)
-
-        editable_video = VideoFileClip("sponsors\videos\allsponsorlongend.mp4").subclip(0, 67)
-        hadia1 = VideoFileClip("sponsors\videos\hadia.mp4")
-        ghazzah1 = VideoFileClip("sponsors\videos\ghazzah1.mp4")
-        sponsorvideo_3_end = CompositeVideoClip([ghazzah1, hadia1, editable_video])
-        split_4 = main_withlogo.subclip(cut_place_3, cut_place_4)
-
-
-
-
-
-        final_clip = concatenate_videoclips([sponsor_beggning, split_1, sponsorvideo_1_short, split_2, sponsorvideo_2_middle, split_3, sponsorvideo_3_end, split_4, sponsorvideo_3_end]) # coneccting them together
+        final_clip = concatenate_videoclips([sponsor_beggning, split_1, shortsponsor1, split_2, allsponsor1, split_3, allsponsor2, split_4, allsponsor2]) # coneccting them together
         # final_clip = concatenate_videoclips([main_withlogo]) >>> for tasting only
-        output_filename = get_available_filename("exported_taste/new_video")
-        # final_clip = concatenate_videoclips([split_1, split_2]) >>> taste
-        final_clip.write_videofile(output_filename, fps=main_video.fps)
+        output_filename = get_available_filename("exported/new_video")
 
-    return output_filename
+        # final_clip = concatenate_videoclips([split_1, split_2]) >>> taste
+
+        final_clip.write_videofile(
+            output_filename,
+            codec="libx264",
+            preset="ultrafast",
+            ffmpeg_params=["-crf", "0"],   # CRF 0 = lossless
+            audio_codec="aac"
+        )
+        
+        return output_filename
 
 
 def download_and_forward(chat, limit):
